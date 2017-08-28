@@ -88,19 +88,23 @@ public class RegForm extends AppCompatActivity {
     }
 
     public void register(View view) {
-//        if (regPassword.toString().equals(regPasswordCon.getText().toString()))  {
-            Intent i = new Intent(this, MainActivity.class);
-            Bundle b = new Bundle();
-            b.putString("UserName", userName.getText().toString());
-            b.putString("Password", regPassword.getText().toString());
-            b.putString("EMail", eMail.getText().toString());
-            b.putString("FullName", fullName.getText().toString());
-            i.putExtras(b);
-            setResult(RESULT_OK, i);
-            finish();
-//        } else {
-//            Toast.makeText(this, "Please enter matshing password", Toast.LENGTH_SHORT).show();
-//        }
+        if (regPassword.getText().toString().equals(regPasswordCon.getText().toString()) && !regPassword.getText().toString().trim().equals(""))  {
+            if (!userName.getText().toString().trim().equals("")) {
+                Intent i = new Intent(this, MainActivity.class);
+                Bundle b = new Bundle();
+                b.putString("UserName", userName.getText().toString());
+                b.putString("Password", regPassword.getText().toString());
+                b.putString("EMail", eMail.getText().toString());
+                b.putString("FullName", fullName.getText().toString());
+                i.putExtras(b);
+                setResult(RESULT_OK, i);
+                finish();
+            } else {
+                Toast.makeText(this, "Please enter the username", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Please enter matshing password", Toast.LENGTH_SHORT).show();
+        }
 
     }
 }
