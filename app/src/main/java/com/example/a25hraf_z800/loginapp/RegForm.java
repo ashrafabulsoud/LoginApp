@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegForm extends AppCompatActivity {
 
@@ -71,9 +72,10 @@ public class RegForm extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length() > 0 && regPassword.getText().toString().length() > 0) {
+                if (editable.length() > 0 && regPasswordCon.getText().toString().length() >= 0) {
                     if (!(editable.toString().equals(regPasswordCon.getText().toString()))) {
                         regPasswordCon.setTextColor(Color.parseColor("#ff0000"));
+                        regPasswordCon.setHintTextColor(Color.parseColor("#ff0000"));
                     } else {
                         regPasswordCon.setTextColor(Color.parseColor("#000000"));
                     }
@@ -86,13 +88,19 @@ public class RegForm extends AppCompatActivity {
     }
 
     public void register(View view) {
-        Intent i = new Intent(this, MainActivity.class);
-        Bundle b = new Bundle();
-        b.putString("UserName", userName.getText().toString());
-        b.putString("Password", regPassword.getText().toString());
-        b.putString("EMail", eMail.getText().toString());
-        b.putString("FullName", fullName.getText().toString());
-        i.putExtras(b);
-        startActivity(i);
+//        if (regPassword.toString().equals(regPasswordCon.getText().toString()))  {
+            Intent i = new Intent(this, MainActivity.class);
+            Bundle b = new Bundle();
+            b.putString("UserName", userName.getText().toString());
+            b.putString("Password", regPassword.getText().toString());
+            b.putString("EMail", eMail.getText().toString());
+            b.putString("FullName", fullName.getText().toString());
+            i.putExtras(b);
+            setResult(RESULT_OK, i);
+            finish();
+//        } else {
+//            Toast.makeText(this, "Please enter matshing password", Toast.LENGTH_SHORT).show();
+//        }
+
     }
 }

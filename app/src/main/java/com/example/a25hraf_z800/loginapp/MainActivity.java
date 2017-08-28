@@ -16,6 +16,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     CheckBox rememberMe;
     EditText loginUsername, loginPassword, loginPasswordCon;
+    String username = "admin", password = "admin";
 
 
     @Override
@@ -23,10 +24,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         loginUsername = (EditText) findViewById(R.id.LoginUsername);
         loginPassword = (EditText) findViewById(R.id.LoginPassword);
         loginPasswordCon = (EditText) findViewById(R.id.LoginPasswordCon);
         rememberMe = (CheckBox) findViewById(R.id.RememberMe);
+
+        //if (getIntent())
+
 
         //start of checkbox listener
         rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -99,10 +104,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 28) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    username = data.getStringExtra("UserName");
+                    password = data.getStringExtra("Password");
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        Intent regDataIntent = getIntent();
+//        Bundle regDataBundel = regDataIntent.getExtras();
+//        username = regDataBundel.getString("UserName");
+//        password = regDataBundel.getString("Password");
+//        Toast.makeText(this, "hiiiiiii", Toast.LENGTH_SHORT).show();
+//
+//    }
+
     //login onClick button
     public void Login(View view) {
         if (rememberMe.isChecked()) {
-            if (loginUsername.getText().toString().trim().equalsIgnoreCase("admin") && loginPassword.getText().toString().equals(loginPasswordCon.getText().toString()) && loginPassword.getText().toString().equals("admin")) {
+            if (loginUsername.getText().toString().trim().equalsIgnoreCase(username) && loginPassword.getText().toString().equals(loginPasswordCon.getText().toString()) && loginPassword.getText().toString().equals(password)) {
                 Intent i = new Intent(this, MainAppPage.class);
                 startActivity(i);
                 finish();
@@ -112,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please enter a Valed Username and Password", Toast.LENGTH_SHORT).show();
             }
         } else {
-            if (loginUsername.getText().toString().trim().equalsIgnoreCase("admin") && loginPassword.getText().toString().equals("admin")) {
+            if (loginUsername.getText().toString().trim().equalsIgnoreCase(username) && loginPassword.getText().toString().equals(password)) {
                 Intent i = new Intent(this, MainAppPage.class);
                 startActivity(i);
                 finish();
@@ -129,8 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void register(View view) {
         Intent i = new Intent(this, RegForm.class);
-        startActivity(i);
-        finish();
+        startActivityForResult(i, 28);
     }
     //register button onClick end
 }

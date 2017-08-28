@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="Password Confirm"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <CheckBox
         android:id="@+id/RememberMe"
@@ -47,5 +47,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RegisterationBTN"
-        android:onClick="register"/>
+        android:onClick="register" />
 </LinearLayout>
